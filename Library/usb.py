@@ -21,6 +21,10 @@ class usb_class():
         if self.device is None:
             self.log(2, "Couldn't detect the device. Is it connected ?")
             return False
+
+        if self.device.is_kernel_driver_active(0):
+            self.device.detach_kernel_driver(0)
+
         self.device.set_configuration()
         self.configuration = self.device.get_active_configuration()
         self.log(2, self.configuration)
